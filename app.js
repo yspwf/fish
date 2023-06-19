@@ -30,4 +30,4 @@ process.on('SIGTERM', ()=>{
 process.on('SIGINT', ()=>{
     console.log('server is exit');
     process.exit();
-})
+}
