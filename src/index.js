@@ -21,8 +21,7 @@ class MyKoa extends Koa{
     }
 }
 
-const App = new MyKoa(Plugins);
-// console.log(App.app)
+
 
 const fs = require('fs');
 
@@ -43,8 +42,8 @@ function LoaderModelFile(sequelize){
     return models;
 }
 
-const sqlModels = LoaderModelFile(sequelize);
 
+const sqlModels = LoaderModelFile(sequelize);
 
 //loader service file
 function LoaderServiceFile(sqlModels){
@@ -70,12 +69,7 @@ function LoaderServiceFile(sqlModels){
     return services;
 }
 
-const Services = LoaderServiceFile(sqlModels);
 
-App.use(async (ctx, next) => {
-    ctx.service = Services;
-    await next();
-})
 
 //loader controller file
 function LoaderControllerFile(){
@@ -101,7 +95,7 @@ function LoaderControllerFile(){
     return controllers;
 }
 
-const Controllers = LoaderControllerFile();
+
 
 
 //loader controller file
@@ -120,7 +114,19 @@ function LoaderMiddlwares(){
     return middlewares;
 }
 
+
+
+const App = new MyKoa(Plugins);
+const Services = LoaderServiceFile(sqlModels);
+const Controllers = LoaderControllerFile();
 const Middlewares = LoaderMiddlwares();
+
+App.use(async (ctx, next) => {
+    ctx.service = Services;
+    await next();
+})
+
+
 
 
 
