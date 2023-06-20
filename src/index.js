@@ -21,12 +21,23 @@ class MyKoa extends Koa{
     }
 }
 
-
-
 const fs = require('fs');
 
+
+const ROOT = process.cwd();
+
+const Config = (path='')=>{
+    const config = require(ROOT+'/config/config.js');
+    return config;
+}
+
+const config = Config();
+
+
 //loader model
-const sequelize = require('./connection');
+const Connection = require('./connection');
+const sequelize = Connection(config);
+
 function LoaderModelFile(sequelize){
     const files = fs.readdirSync(process.cwd() + '/models');
     const models = {}
@@ -135,6 +146,7 @@ const routerFun = require('../router/index');
 
 // const Logs = require('./log');
 // console.log(Logs);
+
 
 const Init = (port = 9093) => {
 

@@ -8,8 +8,8 @@ class Home extends Controller{
     }
 
     async article(ctx){
-       
-        ctx.body = await this.service.Home.index();
+       console.log(ctx.params);
+        ctx.body = await this.service.Home.getById(ctx.params.id);
         Info(`用户id:`, ctx.params, "返回信息", ctx.body);
     }
 
